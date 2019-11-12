@@ -72,9 +72,7 @@ def construct_overlap_map(i_loc, j_loc,pred_maps, dim = 16, filename = False):
 
     return n_map, p_map
 
-
-
-
+#for overlap between map and other
 
 #    n_map =
 #    plt.figure()
@@ -82,14 +80,45 @@ def construct_overlap_map(i_loc, j_loc,pred_maps, dim = 16, filename = False):
 #    plt.figure()
 #    plt.imshow(p_map)
 
+def average_predictions(n_map, p_map):
+    predicted_locations = p_map[n_map > 0]
+    number_of_preds = n_map[n_map > 0]
+    avg_map = predicted_locations / number_of_preds
+    return avg_map
+
+def truth_map(i_loc, j_loc,truth_maps, dim = 16):
+    n_map, p_map = construct_overlap_map(i_loc, j_loc, truth_maps, dim)
+    p_map[p_map > 0] = 1
+    return n_map, p_map
+
+def truth_vals(i_loc, j_loc, truth_maps, dim= 16):
+    n_map, p_map = truth_map(i_loc, j_loc, truth_maps, dim)
+    return p_map[n_map > 0]
+
+
+
+
+
+
+
+
 #
-#a = np.random.randint(low = 0, high = 360 - 16, size = 200000)
-#b = np.random.randint(low = 0, high = 720 - 16, size = 200000)
+a = np.random.randint(low = 0, high = 360 - 16, size = 200000)
+b = np.random.randint(low = 0, high = 720 - 16, size = 200000)
 #pred_maps = np.random.uniform(size = (200000, 16,16))
 #
-#construct_overlap_map(a, b, pred_maps)
-#
-#
+n_map, p_map = construct_overlap_map(a, b, pred_maps)
+
+
+#plt.figure()
+#plt.imshow(n_map)
+#plt.figure()
+#plt.imshow(p_map)
+##
+plt.figure()
+#plt.plot(average_predictions(n_map, p_map))
+#`
+avg = average_predictions(n_map, p_map)
 
 
 
